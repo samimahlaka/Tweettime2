@@ -4,7 +4,12 @@ from .models import Tweet
 # Create your views here.
 
 def home_view(request):
-    return HttpResponse('hello')
+    return render (request, 'tweets/home.html');
+
+def tweet_list_view(request, *args, **kwargs):
+    qs =   Tweet.objects.all();
+    data = [{"id" : x.id , "content" : x.content} for x in qs]
+    return JsonResponse (data , safe = False)
 
 def tweet_detail_view(request, tweet_id , *args , **kwargs):
 

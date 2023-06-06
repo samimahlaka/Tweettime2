@@ -3,5 +3,39 @@
 
 
 {% block content %}
-<h1>home page</h1>
+<h2>home page it is</h2>
+
+<div id = 'tweets'>
+    Replace me
+</div>
+
+<script>
+    const tweetsElement = document.getElementById('tweets')
+    tweetsElement.innerHTML  = 'loading....'
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = "json";
+
+    function formatTweetElement(tweetobj){
+        formatted_tweetobj = "<div class = 'mb-4 tweet id = 'tweet- " + tweetobj.id 
+        + "'><p>" + tweetobj.content 
+        + " </p> </div>"
+        return formatted_tweetobj
+    }
+
+
+    xhr.open('GET','/tweets');
+    xhr.onload = function(){
+       listedItems = xhr.response
+       resultTweets = "";
+       for (i = 0 ; i<listedItems.length ; i++){
+           tweetobj = formatTweetElement(listedItems[i])
+           resultTweets += tweetobj
+       }
+       tweetsElement.innerHTML = resultTweets
+    }
+
+   xhr.send()
+</script>
+
+
 {% endblock content %}
